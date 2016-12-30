@@ -5,7 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Game;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Game controller.
@@ -44,13 +45,16 @@ class GameController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $player = $this->get('security.token_storage')->getToken()->getUser();
             $game->setCreatedAt(new \DateTime());
+            $game->setCreatedBy($player);
             $game->setModifiedAt(new \DateTime());
+            $game->setModifiedBy($player);
             $em = $this->getDoctrine()->getManager();
             $em->persist($game);
             $em->flush($game);
 
-            return $this->redirectToRoute('game_show', array('id' => $game->getId()));
+            return $this->redirectToRoute('game_show', array('shortname' => $game->getShortname()));
         }
 
         return $this->render('game/new.html.twig', array(
@@ -62,7 +66,7 @@ class GameController extends Controller
     /**
      * Finds and displays a game entity.
      *
-     * @Route("/{id}", name="game_show")
+     * @Route("/{shortname}", name="game_show")
      * @Method("GET")
      */
     public function showAction(Game $game)
@@ -88,6 +92,7 @@ class GameController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $game->setModifiedAt(new \Datetime());
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('game_edit', array('id' => $game->getId()));
@@ -116,7 +121,6 @@ class GameController extends Controller
             $em->remove($game);
             $em->flush($game);
         }
-
         return $this->redirectToRoute('game_index');
     }
 

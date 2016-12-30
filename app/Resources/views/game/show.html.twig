@@ -26,12 +26,16 @@
                 <td>{{ game.review | markdown }}</td>
             </tr>
             <tr>
-                <th>Createdat</th>
-                <td>{% if game.createdAt %}{{ game.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <th>Created</th>
+                <td>{% if game.createdAt %}{{ game.createdAt|date('Y-m-d H:i:s') }}{% endif %}
+                by {{ game.createdBy.login }}
+                </td>
             </tr>
             <tr>
                 <th>Modifiedat</th>
-                <td>{% if game.modifiedAt %}{{ game.modifiedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if game.modifiedAt %}{{ game.modifiedAt|date('Y-m-d H:i:s') }}{% endif %}
+                by {{ game.modifiedBy.login }}
+                </td>
             </tr>
         </tbody>
     </table>

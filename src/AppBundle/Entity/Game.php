@@ -57,12 +57,27 @@ class Game
     private $createdAt;
 
     /**
+     * @var Player
+     *
+     * @ORM\ManyToOne(targetEntity="Player")
+     * @ORM\JoinColumn(name="creator_id", referencedColumnName="id")
+     */
+    private $createdBy;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="modifiedAt", type="datetime")
      */
     private $modifiedAt;
 
+    /**
+     * @var Player
+     *
+     * @ORM\ManyToOne(targetEntity="Player")
+     * @ORM\JoinColumn(name="modifier_id", referencedColumnName="id")
+     */
+    private $modifiedBy;
 
     /**
      * Get id
@@ -217,5 +232,52 @@ class Game
     {
         return $this->modifiedAt;
     }
-}
 
+    /**
+     * Set modifiedBy
+     *
+     * @param \AppBundle\Entity\Player $modifiedBy
+     *
+     * @return Game
+     */
+    public function setModifiedBy(\AppBundle\Entity\Player $modifiedBy = null)
+    {
+        $this->modifiedBy = $modifiedBy;
+
+        return $this;
+    }
+
+    /**
+     * Get modifiedBy
+     *
+     * @return \AppBundle\Entity\Player
+     */
+    public function getModifiedBy()
+    {
+        return $this->modifiedBy;
+    }
+
+    /**
+     * Set createdBy
+     *
+     * @param \AppBundle\Entity\Player $createdBy
+     *
+     * @return Game
+     */
+    public function setCreatedBy(\AppBundle\Entity\Player $createdBy = null)
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * Get createdBy
+     *
+     * @return \AppBundle\Entity\Player
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
+    }
+}
