@@ -92,6 +92,9 @@ class PlayerController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $password = $this->get('security.password_encoder')
+                ->encodePassword($player, $player->getPlainPassword());
+            $player->setPassword($password);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('player_edit', array('id' => $player->getId()));

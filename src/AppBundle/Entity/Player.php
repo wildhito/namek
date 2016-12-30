@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -28,13 +29,6 @@ class Player implements UserInterface, \Serializable
      * @ORM\Column(name="login", type="string", length=255, unique=true)
      */
     private $login;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="fullname", type="string", length=255, nullable=true)
-     */
-    private $fullname;
 
     /**
      * @var string
@@ -65,6 +59,33 @@ class Player implements UserInterface, \Serializable
      * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Game")
+     */
+    private $games;
+
+    public function __construct()
+    {
+        $this->games = new ArrayCollection();
+    }
+
+    public function getGames()
+    {
+        return $this->games;
+    }
+
+    public function addGame(Game $game)
+    {
+        $this->games[] = $game;
+        return $this;
+    }
+
+
+    public function removeGame(Game $game)
+    {
+        $this->games->removeElement($game);
+    }
 
     /**
      * Get id
@@ -108,30 +129,6 @@ class Player implements UserInterface, \Serializable
     public function getSalt()
     {
         return null;
-    }
-
-    /**
-     * Set fullname
-     *
-     * @param string $fullname
-     *
-     * @return Player
-     */
-    public function setFullname($fullname)
-    {
-        $this->fullname = $fullname;
-
-        return $this;
-    }
-
-    /**
-     * Get fullname
-     *
-     * @return string
-     */
-    public function getFullname()
-    {
-        return $this->fullname;
     }
 
     /**
@@ -266,4 +263,3 @@ class Player implements UserInterface, \Serializable
             ) = unserialize($serialized);
     }
 }
-

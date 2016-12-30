@@ -21,6 +21,14 @@
                 <th>Enable</th>
                 <td>{% if player.enable %}Yes{% else %}No{% endif %}</td>
             </tr>
+            <tr>
+                <th>Games</th>
+                <td><ul>
+                    {% for game in player.games %}
+                    <li>{{ game.fullname }}</li>
+                    {% endfor %}
+                </ul></td>
+            </tr>
         </tbody>
     </table>
 

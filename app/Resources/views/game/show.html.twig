@@ -42,6 +42,13 @@
 
     <ul>
         <li>
+            {% if game in app.user.games %}
+            <i>I play that game!</i>
+            {% else %}
+               <a href="{{ path('game_add_player', {'id': game.id}) }}">Add to my games</a>
+            {% endif %}
+        </li>
+        <li>
             <a href="{{ path('game_index') }}">Back to the list</a>
         </li>
         <li>

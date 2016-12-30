@@ -125,6 +125,22 @@ class GameController extends Controller
     }
 
     /**
+     * Add current player to game
+     *
+     * @Route("/{id}/add_player/", name="game_add_player")
+     * @Method("GET")
+     */
+    public function addPlayerAction(Game $game)
+    {
+       $user = $this->get('security.token_storage')->getToken()->getUser();
+       $user->addGame($game);
+       $em = $this->getDoctrine()->getManager();
+       $em->persist($user);
+       $em->flush($user);
+       return $this->redirectToRoute('game_index');
+    }
+
+    /**
      * Creates a form to delete a game entity.
      *
      * @param Game $game The game entity
