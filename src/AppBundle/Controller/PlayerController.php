@@ -45,7 +45,7 @@ class PlayerController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $player->setCreatedAt(new \Datetime());
-            $player->setEnable(true);
+            $player->setEnable(false);
             $password = $this->get('security.password_encoder')
                 ->encodePassword($player, $player->getPlainPassword());
             $player->setPassword($password);
@@ -72,10 +72,12 @@ class PlayerController extends Controller
     public function showAction(Player $player)
     {
         $deleteForm = $this->createDeleteForm($player);
+        $enableForm = $this->createEnableForm($player);
 
         return $this->render('player/show.html.twig', array(
             'player' => $player,
             'delete_form' => $deleteForm->createView(),
+            'enable_form' => $enableForm->createView(),
         ));
     }
 
@@ -128,6 +130,21 @@ class PlayerController extends Controller
     }
 
     /**
+     * Enable or disable a player
+     *
+     * @Route("/{id}/enable", name="player_enable")
+     * @Method("POST")
+     */
+    public function enableAction(Player $player)
+    {
+        $player->setEnable(!$player->getEnable());
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($player);
+        $em->flush($player);
+        return $this->redirectToRoute('player_index');
+    }
+
+    /**
      * Creates a form to delete a player entity.
      *
      * @param Player $player The player entity
@@ -139,6 +156,22 @@ class PlayerController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('player_delete', array('id' => $player->getId())))
             ->setMethod('DELETE')
+            ->getForm()
+        ;
+    }
+
+    /**
+     * Creates a form to enable a player entity.
+     *
+     * @param Player $player The player entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEnableForm(Player $player)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('player_enable', array('id' => $player->getId())))
+            ->setMethod('POST')
             ->getForm()
         ;
     }
