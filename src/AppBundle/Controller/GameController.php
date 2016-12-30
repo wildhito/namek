@@ -127,7 +127,7 @@ class GameController extends Controller
     /**
      * Add current player to game
      *
-     * @Route("/{id}/add_player/", name="game_add_player")
+     * @Route("/{shortname}/add_player/", name="game_add_player")
      * @Method("GET")
      */
     public function addPlayerAction(Game $game)

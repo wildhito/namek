@@ -18,8 +18,8 @@
                 <td>{{ player.email }}</td>
             </tr>
             <tr>
-                <th>Enable</th>
-                <td>{% if player.enable %}Yes{% else %}No{% endif %}</td>
+                <th>Role</th>
+                <td>{% if player.roles|length > 0 %}{{ player.roles[0] }}{% endif %}</td>
             </tr>
             <tr>
                 <th>Games</th>
@@ -31,12 +31,9 @@
             </tr>
         </tbody>
     </table>
-
     <ul>
         <li>
-            {{ form_start(enable_form) }}
-                <input type="submit" value="{% if player.enable %}Disable{% else %}Enable{% endif %}" />
-            {{ form_end(enable_form) }}
+            <a href="{{ path('player_role', {'id': player.id}) }}">Update role</a>
         </li>
         <li>
             <a href="{{ path('player_index') }}">Back to the list</a>

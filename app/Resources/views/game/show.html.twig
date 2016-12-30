@@ -45,7 +45,7 @@
             {% if game in app.user.games %}
             <i>I play that game!</i>
             {% else %}
-               <a href="{{ path('game_add_player', {'id': game.id}) }}">Add to my games</a>
+               <a href="{{ path('game_add_player', {'shortname': game.shortname}) }}">Add to my games</a>
             {% endif %}
         </li>
         <li>

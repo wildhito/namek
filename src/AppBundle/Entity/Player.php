@@ -47,11 +47,11 @@ class Player implements UserInterface, \Serializable
     private $plainPassword;
 
     /**
-     * @var bool
+     * @var string
      *
-     * @ORM\Column(name="enable", type="boolean")
+     * @ORM\Column(name="role", type="string", length=255, nullable=true)
      */
-    private $enable;
+    private $role;
 
     /**
      * @var \DateTime
@@ -192,30 +192,6 @@ class Player implements UserInterface, \Serializable
     }
 
     /**
-     * Set enable
-     *
-     * @param boolean $enable
-     *
-     * @return Player
-     */
-    public function setEnable($enable)
-    {
-        $this->enable = $enable;
-
-        return $this;
-    }
-
-    /**
-     * Get enable
-     *
-     * @return bool
-     */
-    public function getEnable()
-    {
-        return $this->enable;
-    }
-
-    /**
      * Set createdAt
      *
      * @param \DateTime $createdAt
@@ -239,8 +215,17 @@ class Player implements UserInterface, \Serializable
         return $this->createdAt;
     }
 
+    public function getRole() {
+        return $this->role;
+    }
+
     public function getRoles() {
-        return array('ROLE_USER');
+        return array($this->role);
+    }
+
+    public function setRole($role) {
+        $this->role = $role;
+        return $this;
     }
 
     public function eraseCredentials() {
