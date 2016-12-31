@@ -65,7 +65,7 @@ class PlayerController extends Controller
     /**
      * Finds and displays a player entity.
      *
-     * @Route("/{id}", name="player_show")
+     * @Route("/{login}", name="player_show")
      * @Method("GET")
      */
     public function showAction(Player $player)

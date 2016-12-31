@@ -6,39 +6,34 @@
     <table>
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Login</th>
+                {% if is_granted('ROLE_USER') %}
                 <th>Email</th>
-                <th>Password</th>
-                <th>Enable</th>
+                <th>Role</th>
                 <th>Actions</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
         {% for player in players %}
             <tr>
-                <td><a href="{{ path('player_show', { 'id': player.id }) }}">{{ player.id }}</a></td>
                 <td>{{ player.login }}</td>
+                {% if is_granted('ROLE_USER') %}
                 <td>{{ player.email }}</td>
-                <td>{{ player.password }}</td>
+                <td>{{ player.role }}</td>
                 <td>
                     <ul>
                         <li>
-                            <a href="{{ path('player_show', { 'id': player.id }) }}">show</a>
+                            <a href="{{ path('player_show', { 'login': player.login }) }}">show</a>
                         </li>
                         <li>
                             <a href="{{ path('player_edit', { 'id': player.id }) }}">edit</a>
                         </li>
                     </ul>
                 </td>
+                {% endif %}
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('player_new') }}">Create a new player</a>
-        </li>
-    </ul>
 {% endblock %}
