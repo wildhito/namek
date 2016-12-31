@@ -2,13 +2,9 @@
 
 {% block body %}
     <h1>Game</h1>
-
+    <img src="/{{ logo_path }}" alt="No logo" />
     <table>
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ game.id }}</td>
-            </tr>
             <tr>
                 <th>Shortname</th>
                 <td>{{ game.shortname }}</td>
@@ -41,12 +37,17 @@
     </table>
 
     <ul>
+        {% if is_granted('ROLE_USER') %}
         <li>
             {% if game in app.user.games %}
-            <i>I play that game!</i>
+                <i>I play that game!</i>
             {% else %}
-               <a href="{{ path('game_add_player', {'shortname': game.shortname}) }}">Add to my games</a>
+                <a href="{{ path('game_add_player', {'shortname': game.shortname}) }}">Add to my games</a>
             {% endif %}
+        </li>
+        {% endif %}
+        <li>
+           <a href="{{ path('game_logo', {'id': game.id}) }}">Upload logo</a>
         </li>
         <li>
             <a href="{{ path('game_index') }}">Back to the list</a>
