@@ -1,5 +1,6 @@
 /app/config/parameters.yml
 /web/games
+/web/players
 /build/
 /phpunit.xml
 /var/*

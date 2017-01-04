@@ -2,7 +2,7 @@
 
 {% block body %}
     <h1>Player</h1>
-
+    <img src="/{{ logo_path }}" alt="No logo" />
     <table>
         <tbody>
             <tr>
@@ -40,6 +40,9 @@
         </li>
         <li>
             <a href="{{ path('player_edit', { 'id': player.id }) }}">Edit</a>
+        </li>
+        <li>
+            <a href="{{ path('player_logo', { 'id': player.id }) }}">Upload logo</a>
         </li>
         <li>
             {{ form_start(delete_form) }}

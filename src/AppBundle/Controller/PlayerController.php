@@ -74,6 +74,7 @@ class PlayerController extends Controller
 
         return $this->render('player/show.html.twig', array(
             'player' => $player,
+            'logo_path' => $this->getLogoPath($player),
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -127,6 +128,34 @@ class PlayerController extends Controller
     }
 
     /**
+     * Displays a form to upload player logo
+     *
+     * @Route("/{id}/logo", name="player_logo")
+     * @Method({"GET", "POST"})
+     */
+    public function logoAction(Request $request, Player $player)
+    {
+        $logoForm = $this->createForm('AppBundle\Form\UploadType', null,
+             array('label' => 'Player logo'));
+        $logoForm->handleRequest($request);
+        if ($logoForm->isSubmitted() && $logoForm->isValid()) {
+            $data = $logoForm->getData();
+            $file = $data['uploaded_file'];
+            $targetDir = $this->getLogoDir();
+            if ($this->get('app.file_uploader')->upload($file, $targetDir, $this->getLogoName($player),
+                $this->getLogoMimeTypes())) {
+                return $this->redirectToRoute('player_show', array('login' => $player->getLogin()));
+            }
+        }
+
+        return $this->render('common/upload.html.twig', array(
+            'upload_form' => $logoForm->createView(),
+        ));
+    }
+
+
+
+    /**
      * Deletes a player entity.
      *
      * @Route("/{id}", name="player_delete")
@@ -160,6 +189,26 @@ class PlayerController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    private function getLogoDir()
+    {
+        return "players";
+    }
+
+    private function getLogoName(Player $player)
+    {
+        return sprintf("%d.png", $player->getId());
+    }
+
+    private function getLogoPath(Player $player)
+    {
+        return sprintf("%s/%s", $this->getLogoDir(), $this->getLogoName($player));
+    }
+
+    private function getLogoMimeTypes()
+    {
+        return array("image/png");
     }
 }
 
