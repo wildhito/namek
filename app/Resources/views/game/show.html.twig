@@ -1,18 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Game</h1>
+    <h1>{{ game.fullname }}</h1>
     <img src="/{{ logo_path }}" alt="No logo" />
     <table>
         <tbody>
-            <tr>
-                <th>Shortname</th>
-                <td>{{ game.shortname }}</td>
-            </tr>
-            <tr>
-                <th>Fullname</th>
-                <td>{{ game.fullname }}</td>
-            </tr>
             <tr>
                 <th>Brief</th>
                 <td>{{ game.brief }}</td>
@@ -37,6 +29,9 @@
     </table>
 
     <ul>
+        <li>
+            <a href="{{ path('post_index', { 'game': game.shortname }) }}">Posts</a>
+        </li>
         {% if is_granted('ROLE_USER') %}
         <li>
             {% if game in app.user.games %}

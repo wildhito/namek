@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{{ game.fullname }} posts</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Createdat</th>
+                <th>Modifiedat</th>
+                <th>Comment</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for post in posts %}
+            <tr>
+                <td>{% if post.createdAt %}{{ post.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if post.modifiedAt %}{{ post.modifiedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ post.comment }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('post_show', { 'id': post.id, 'game': game.shortname }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('post_edit', { 'id': post.id, 'game': game.shortname }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('post_new', { 'game': game.shortname }) }}">Create a new post</a>
+        </li>
+    </ul>
+{% endblock %}

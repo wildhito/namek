@@ -96,7 +96,7 @@ class GameController extends Controller
             $game->setModifiedAt(new \Datetime());
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('game_edit', array('id' => $game->getId()));
+            return $this->redirectToRoute('game_show', array('shortname' => $game->getShortname()));
         }
 
         return $this->render('game/edit.html.twig', array(
@@ -164,7 +164,7 @@ class GameController extends Controller
        $em = $this->getDoctrine()->getManager();
        $em->persist($user);
        $em->flush($user);
-       return $this->redirectToRoute('game_index');
+       return $this->redirectToRoute('game_show', array('shortname' => $game->getShortname()));
     }
 
     /**
