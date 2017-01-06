@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Game
@@ -279,5 +280,35 @@ class Game
     public function getCreatedBy()
     {
         return $this->createdBy;
+    }
+
+    public function getLogoName()
+    {
+        return "logo.png";
+    }
+
+    public function getLogoMimeType()
+    {
+        return "image/png";
+    }
+
+    public function getLogoDir()
+    {
+        return sprintf("games/%d", $this->id);
+    }
+
+    public function getLogoPath()
+    {
+        $logopath = sprintf("%s/%s", $this->getLogoDir(), $this->getLogoName());
+        $fs = new Filesystem();
+        if (!$fs->exists($logopath)) {
+            return "images/default_game.png";
+        }
+        return $logopath;
+    }
+
+    public function getLogoWebPath()
+    {
+        return sprintf("/%s", $this->getLogoPath());
     }
 }

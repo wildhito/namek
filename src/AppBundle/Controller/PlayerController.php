@@ -43,7 +43,6 @@ class PlayerController extends Controller
 
         return $this->render('player/show.html.twig', array(
             'player' => $player,
-            'logo_path' => $this->getLogoPath($player),
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -110,9 +109,9 @@ class PlayerController extends Controller
         if ($logoForm->isSubmitted() && $logoForm->isValid()) {
             $data = $logoForm->getData();
             $file = $data['uploaded_file'];
-            $targetDir = $this->getLogoDir();
-            if ($this->get('app.file_uploader')->upload($file, $targetDir, $this->getLogoName($player),
-                $this->getLogoMimeTypes())) {
+            $targetDir = $player->getLogoDir();
+            if ($this->get('app.file_uploader')->upload($file, $targetDir, $player->getLogoName(),
+                array($this->getLogoMimeType()))) {
                 return $this->redirectToRoute('player_show', array('login' => $player->getLogin()));
             }
         }
@@ -160,24 +159,5 @@ class PlayerController extends Controller
         ;
     }
 
-    private function getLogoDir()
-    {
-        return "players";
-    }
-
-    private function getLogoName(Player $player)
-    {
-        return sprintf("%d.png", $player->getId());
-    }
-
-    private function getLogoPath(Player $player)
-    {
-        return sprintf("%s/%s", $this->getLogoDir(), $this->getLogoName($player));
-    }
-
-    private function getLogoMimeTypes()
-    {
-        return array("image/png");
-    }
 }
 

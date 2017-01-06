@@ -75,7 +75,8 @@ class GameController extends Controller
 
         return $this->render('game/show.html.twig', array(
             'game' => $game,
-            'logo_path' => $this->getLogoPath($game),
+            'game_players' => $players,
+            'logo_path' => $game->getLogoWebPath(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -94,6 +95,7 @@ class GameController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $game->setModifiedAt(new \Datetime());
+            $game->setModifiedBy($this->get('security.token_storage')->getToken()->getUser());
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('game_show', array('shortname' => $game->getShortname()));
@@ -120,9 +122,9 @@ class GameController extends Controller
         if ($logoForm->isSubmitted() && $logoForm->isValid()) {
             $data = $logoForm->getData();
             $file = $data['uploaded_file'];
-            $targetDir = $this->getLogoDir($game);
-            if ($this->get('app.file_uploader')->upload($file, $targetDir, $this->getLogoName(),
-                $this->getLogoMimeTypes())) {
+            $targetDir = $game->getLogoDir();
+            if ($this->get('app.file_uploader')->upload($file, $targetDir, $game->getLogoName(),
+                array($game->getLogoMimeType()))) {
                 return $this->redirectToRoute('game_show', array('shortname' => $game->getShortname()));
             }
         }
@@ -182,24 +184,5 @@ class GameController extends Controller
             ->getForm()
         ;
     }
-
-    private function getLogoDir(Game $game)
-    {
-        return sprintf("games/%d", $game->getId());
-    }
-
-    private function getLogoName()
-    {
-        return "logo.png";
-    }
-
-    private function getLogoPath(Game $game)
-    {
-        return sprintf("%s/%s", $this->getLogoDir($game), $this->getLogoName());
-    }
-
-    private function getLogoMimeTypes()
-    {
-        return array("image/png");
-    }
 }
+

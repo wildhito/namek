@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Player
@@ -246,5 +247,35 @@ class Player implements UserInterface, \Serializable
              $this->login,
              $this->password,
             ) = unserialize($serialized);
+    }
+
+    public function getLogoName()
+    {
+        return sprintf("%s.png", $this->id);
+    }
+
+    public function getLogoDir()
+    {
+        return "players";
+    }
+
+    public function getLogoPath()
+    {
+        $logopath = sprintf("%s/%s", $this->getLogoDir(), $this->getLogoName());
+        $fs = new Filesystem();
+        if (!$fs->exists($logopath)) {
+            return "images/default_player.png";
+        }
+        return $logopath;
+    }
+
+    public function getLogoWebPath()
+    {
+        return sprintf("/%s", $this->getLogoPath());
+    }
+
+    public function getLogoMimeType()
+    {
+        return "image/png";
     }
 }
