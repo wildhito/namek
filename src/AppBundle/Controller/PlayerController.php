@@ -32,37 +32,6 @@ class PlayerController extends Controller
     }
 
     /**
-     * Creates a new player entity.
-     *
-     * @Route("/new", name="player_new")
-     * @Method({"GET", "POST"})
-     */
-    public function newAction(Request $request)
-    {
-        $player = new Player();
-        $form = $this->createForm('AppBundle\Form\PlayerType', $player);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $player->setCreatedAt(new \Datetime());
-            $password = $this->get('security.password_encoder')
-                ->encodePassword($player, $player->getPlainPassword());
-            $player->setPassword($password);
-            $player->setRole('ROLE_NONE');
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($player);
-            $em->flush($player);
-
-            return $this->redirectToRoute('player_show', array('id' => $player->getId()));
-        }
-
-        return $this->render('player/new.html.twig', array(
-            'player' => $player,
-            'form' => $form->createView(),
-        ));
-    }
-
-    /**
      * Finds and displays a player entity.
      *
      * @Route("/{login}", name="player_show")
