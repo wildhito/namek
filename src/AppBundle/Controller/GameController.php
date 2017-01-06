@@ -71,6 +71,9 @@ class GameController extends Controller
      */
     public function showAction(Game $game)
     {
+        $em = $this->getDoctrine()->getManager();
+        $players = $em->getRepository('AppBundle:Game')->getPlayersFromGame($game->getId());
+
         $deleteForm = $this->createDeleteForm($game);
 
         return $this->render('game/show.html.twig', array(

@@ -10,4 +10,14 @@ namespace AppBundle\Repository;
  */
 class GameRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getPlayersFromGame($id)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('p')
+           ->from('\AppBundle\Entity\Player', 'p')
+           ->join('p.games', 'g')
+           ->where($qb->expr()->eq('g.id', $id));
+
+        return $qb->getQuery()->getResult();
+    }
 }
