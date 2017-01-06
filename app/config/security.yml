@@ -33,7 +33,6 @@ security:
     access_control:
         - { path: ^/game/[0-9]+, roles: ROLE_ADMIN }
         - { path: ^/game/new, roles: ROLE_USER }
-        - { path: ^/player/new, roles: IS_ANONYMOUSLY_AUTHENTICATED }
         - { path: ^/player/[0-9]+, roles: ROLE_ADMIN }
 
 

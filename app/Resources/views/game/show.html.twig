@@ -1,51 +1,63 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>{{ game.fullname }}</h1>
-    <img src="/{{ logo_path }}" alt="No logo" />
-    <table>
-        <tbody>
-            <tr>
-                <th>Brief</th>
-                <td>{{ game.brief }}</td>
-            </tr>
-            <tr>
-                <th>Review</th>
-                <td>{{ game.review | markdown }}</td>
-            </tr>
-            <tr>
-                <th>Created</th>
-                <td>{% if game.createdAt %}{{ game.createdAt|date('Y-m-d H:i:s') }}{% endif %}
-                by {{ game.createdBy.login }}
-                </td>
-            </tr>
-            <tr>
-                <th>Modifiedat</th>
-                <td>{% if game.modifiedAt %}{{ game.modifiedAt|date('Y-m-d H:i:s') }}{% endif %}
-                by {{ game.modifiedBy.login }}
-                </td>
-            </tr>
-        </tbody>
-    </table>
+{% block content %}
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+      <br><br>
+      <h1 class="header center orange-text">{{ game.fullname }}</h1>
+      <div class="row center">
+        <img src="{{ game.logowebpath }}" alt="" class="logo-medium"/>
+        <h5 class="header col s12 light">{{ game.brief }}</h5>
+      </div>
+      {% if is_granted('ROLE_USER') %}
+         {% if game in app.user.games %}
+         {% else %}
+      <div class="row center">
+        <a href="{{ path('game_add_player', {'shortname': game.shortname}) }}" id="download-button" class="btn-large waves-effect waves-light orange">I play that game!</a>
+      </div>
+      <br><br>
+         {% endif %}
+      {% endif %}
+    </div>
+  </div>
 
+created at {{ game.createdAt|date('Y-m-d H:i:s') }} by {{ game.createdBy.login }},<br/>
+last modified at {{ game.modifiedAt|date('Y-m-d H:i:s') }} by {{ game.modifiedBy.login }}
+
+  <div class="row">
+    <ul class="tabs">
+        <li class="tab col s3"><a href="#review">Review</a></li>
+        <li class="tab col s3"><a href="#discussion">Discussion</a></li>
+        <li class="tab col s3 disabled"><a href="#pictures">Pictures</a></li>
+        <li class="tab col s3"><a href="#players">Players</a></li>
+    </div>
+  </div>
+
+  <div id="review">
+      {{ game.review | markdown }}
+  </div>
+  <div id="discussion">
+    TODO() retrieve posts...
+  </div>
+  <div id="pictures">
+    TODO() pictures management
+  </div>
+  <div id="players">
+    <ul>
+    {% for player in game_players %}
+       <li>
+           <img src="{{ player.logowebpath }}" alt="" class="logo-small" />
+           <a href="{{ path('player_show', { 'login': player.login }) }}">{{ player.login }}</a>
+       </li>
+    {% endfor %}
+    </ul>
+  </div>
+    <br/>
+    <br/>
+    ADMIN ACTIONS TODO()
     <ul>
         <li>
-            <a href="{{ path('post_index', { 'game': game.shortname }) }}">Posts</a>
-        </li>
-        {% if is_granted('ROLE_USER') %}
-        <li>
-            {% if game in app.user.games %}
-                <i>I play that game!</i>
-            {% else %}
-                <a href="{{ path('game_add_player', {'shortname': game.shortname}) }}">Add to my games</a>
-            {% endif %}
-        </li>
-        {% endif %}
-        <li>
            <a href="{{ path('game_logo', {'id': game.id}) }}">Upload logo</a>
-        </li>
-        <li>
-            <a href="{{ path('game_index') }}">Back to the list</a>
         </li>
         <li>
             <a href="{{ path('game_edit', { 'id': game.id }) }}">Edit</a>

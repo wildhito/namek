@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Player creation</h1>
+    <h1>Registration</h1>
 
     {{ form_start(form) }}
         {{ form_row(form.login) }}
@@ -12,9 +12,4 @@
         <button type="submit">Register!</button>
     {{ form_end(form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('player_index') }}">Back to the list</a>
-        </li>
-    </ul>
 {% endblock %}
