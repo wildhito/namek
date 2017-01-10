@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,7 +14,7 @@ class GameType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('shortname')->add('fullname')->add('brief')->add('review');
+        $builder->add('shortname')->add('fullname')->add('brief')->add('review', TextareaType::class, array('attr' => array('class' => 'materialize-textarea')));
     }
     
     /**

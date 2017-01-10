@@ -1,8 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Players list</h1>
+{% block content %}
+<div class="section no-pad-bot">
+  <div class="container">
+    <h1 class="header center orange-text">Players</h1>
+  </div>
+</div>
 
+<div class="section">
+  <div class="container">
     <table>
         <thead>
             <tr>
@@ -10,30 +16,21 @@
                 {% if is_granted('ROLE_USER') %}
                 <th>Email</th>
                 <th>Role</th>
-                <th>Actions</th>
                 {% endif %}
             </tr>
         </thead>
         <tbody>
         {% for player in players %}
             <tr>
-                <td>{{ player.login }}</td>
+                <td><a href="{{ path('player_show', { 'login': player.login }) }}">{{ player.login }}</a></td>
                 {% if is_granted('ROLE_USER') %}
                 <td>{{ player.email }}</td>
                 <td>{{ player.role }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('player_show', { 'login': player.login }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('player_edit', { 'id': player.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
                 {% endif %}
             </tr>
         {% endfor %}
         </tbody>
     </table>
+  </div>
+</div>
 {% endblock %}

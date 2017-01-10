@@ -118,6 +118,7 @@ class PlayerController extends Controller
 
         return $this->render('common/upload.html.twig', array(
             'upload_form' => $logoForm->createView(),
+            'upload_title' => sprintf("%s's logo", $player->getLogin()),
         ));
     }
 

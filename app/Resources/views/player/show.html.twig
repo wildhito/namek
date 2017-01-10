@@ -1,53 +1,43 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Player</h1>
-    <img src="{{ player.logowebpath }}" alt="" />
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ player.id }}</td>
-            </tr>
-            <tr>
-                <th>Login</th>
-                <td>{{ player.login }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ player.email }}</td>
-            </tr>
-            <tr>
-                <th>Role</th>
-                <td>{% if player.roles|length > 0 %}{{ player.roles[0] }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Games</th>
-                <td><ul>
-                    {% for game in player.games %}
-                    <li>{{ game.fullname }}</li>
-                    {% endfor %}
-                </ul></td>
-            </tr>
-        </tbody>
-    </table>
+{% block content %}
+<div class="section no-pad-bot">
+  <div class="container">
+    <h1 class="header center orange-text">{{ player.login }}</h1>
+    <div class="center">
+      <img class="logo-medium circle" src="{{ player.logowebpath }}" alt="" />
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="container">
+    {% if is_granted('ROLE_ADMIN') %}
+      {% if player.roles|length > 0 %}({{ player.roles[0] }}){% endif %}
+    {% endif %}
+    <h5>Games I play</h5>
     <ul>
-        <li>
-            <a href="{{ path('player_role', {'id': player.id}) }}">Update role</a>
-        </li>
-        <li>
-            <a href="{{ path('player_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('player_edit', { 'id': player.id }) }}">Edit</a>
-        </li>
-        <li>
-            <a href="{{ path('player_logo', { 'id': player.id }) }}">Upload logo</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete" />
-            {{ form_end(delete_form) }}
-        </li>
+      {% for game in player.games %}
+      <li>
+         <a href="{{ path('game_show', { 'shortname': game.shortname }) }}">{{ game.fullname }}</a>
+      </li>
+      {% endfor %}
     </ul>
+  </div>
+</div>
+
+<div class="container">
+  <div class="fixed-action-btn horizontal">
+    {{ form_start(delete_form) }}
+    <button title="Delete" class="btn-floating btn-large red" type="submit" name="action">
+       <i class="material-icons">delete</i>
+    </button>
+    <a title="Change logo" class="btn-floating btn-large blue" href="{{ path('player_logo', {'id': player.id}) }}"><i class="material-icons">image</i></a>
+    <a title="Edit" class="btn-floating btn-large blue" href="{{ path('player_edit', { 'id': player.id }) }}"><i class="material-icons">mode_edit</i></a>
+    <a title="Change role" class="btn-floating btn-large blue" href="{{ path('player_role', {'id': player.id}) }}"><i class="material-icons">assignment_ind</i></a>
+    {{ form_end(delete_form) }}
+  </div>
+</div>
+
 {% endblock %}
+

@@ -20,11 +20,12 @@
         <div class="row">
           {% for game in games %}
           <div class="col s12 m4">
-            <div class="icon-block">
-              <h2 class="center"><img class="logo-medium" src="{{ game.logowebpath }}" alt="" /></h2>
-              <h5 class="center"><a href="{{ path('game_show', {'shortname': game.shortname }) }}">{{ game.fullname }}</a></h5>
-
-              <p class="light">{{ game.brief }}</p>
+            <div class="card small horizontal">
+                <div class="card-content center">
+                  <img class="logo-medium circle" src="{{ game.logowebpath }}" alt="" /><br/>
+                  <a class="card-title" href="{{ path('game_show', {'shortname': game.shortname }) }}">{{ game.fullname }}</a>
+                  <p class="light">{{ game.brief }}</p>
+                </div>
             </div>
           </div>
           {% endfor %}

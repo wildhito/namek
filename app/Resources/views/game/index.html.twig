@@ -1,43 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Games list</h1>
+{% block content %}
+<div class="section no-pad-bot">
+  <div class="container">
+    <h1 class="header center orange-text">Games</h1>
+  </div>
+</div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Shortname</th>
-                <th>Fullname</th>
-                <th>Brief</th>
-                <th>Review</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for game in games %}
-            <tr>
-                <td>{{ game.shortname }}</td>
-                <td>{{ game.fullname }}</td>
-                <td>{{ game.brief }}</td>
-                <td>{{ game.review }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('game_show', { 'shortname': game.shortname }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('game_edit', { 'id': game.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<div class="section">
+  <div class="container">
+    <div class="row">
+      {% for game in games %}
+      <div class="col s12 m4">
+        <div class="card small horizontal">
+          <div class="card-content center">
+            <img class="logo-medium circle" src="{{ game.logowebpath }}" alt="" /><br/>
+               <a class="card-title" href="{{ path('game_show', {'shortname': game.shortname }) }}">{{ game.fullname }}</a>
+               <p class="light">{{ game.brief }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
 
-    <ul>
-        <li>
-            <a href="{{ path('game_new') }}">Create a new game</a>
-        </li>
-    </ul>
+{% if is_granted('ROLE_ADMIN') %}
+<div class="container">
+  <div class="fixed-action-btn horizontal">
+    <a title="Add a game" class="btn-floating btn-large blue"  href="{{ path('game_new') }}">
+      <i class="material-icons">add</i>
+    </a>
+  </div>
+</div>
+{% endif %}
+
 {% endblock %}
+
