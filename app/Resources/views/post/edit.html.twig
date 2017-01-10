@@ -1,21 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Post edit</h1>
+{% block content %}
+<div class="section">
+  <div class="container">
+    <h1 class="header center orange-text">Comment on {{ game.fullname }}</h1>
 
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
+        <button class="btn btn-large" type="submit">Post</button>
     {{ form_end(edit_form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('post_index', { 'game': game.shortname }) }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+  </div>
+</div>
 {% endblock %}
+

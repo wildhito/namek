@@ -28,10 +28,11 @@ class PostController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $posts = $em->getRepository('AppBundle:Post')->findBy(array('game' => $game));
-
+        $deleteForm = $this->createDeleteForm(new Post(), $game);
         return $this->render('post/index.html.twig', array(
             'posts' => $posts,
             'game' => $game,
+            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -57,8 +58,7 @@ class PostController extends Controller
             $em->persist($post);
             $em->flush($post);
 
-            return $this->redirectToRoute('post_show', array('id' => $post->getId(),
-                                                             'game' => $game->getShortname() ));
+            return $this->redirectToRoute('game_show', array('shortname' => $game->getShortname() ));
         }
 
         return $this->render('post/new.html.twig', array(
@@ -101,8 +101,7 @@ class PostController extends Controller
             $post->setModifiedAt(new \DateTime());
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('post_show', array('id' => $post->getId(),
-                                                             'game' => $game->getShortname()));
+            return $this->redirectToRoute('game_show', array('shortname' => $game->getShortname()));
         }
 
         return $this->render('post/edit.html.twig', array(
@@ -130,7 +129,7 @@ class PostController extends Controller
             $em->flush($post);
         }
 
-	return $this->redirectToRoute('post_index', array('game' => $game->getShortname()));
+	return $this->redirectToRoute('game_show', array('shortname' => $game->getShortname()));
     }
 
     /**

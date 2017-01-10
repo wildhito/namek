@@ -1,16 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Post creation</h1>
+{% block content %}
+<div class="section">
+  <div class="container">
+    <h1 class="header center orange-text">Comment on {{ game.fullname }}</h1>
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+        <button class="btn btn-large" type="submit" value="Post">Post</button>
     {{ form_end(form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('post_index', { 'game': game.id }) }}">Back to the list</a>
-        </li>
-    </ul>
+  </div>
+</div>
 {% endblock %}

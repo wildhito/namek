@@ -34,7 +34,7 @@
       {{ game.review | markdown }}
     </div>
     <div id="discussion">
-      TODO() retrieve posts...
+    {{ render(controller('AppBundle:Post:index', { 'game': game.shortname })) }}
     </div>
     <div id="pictures">
       TODO() pictures management

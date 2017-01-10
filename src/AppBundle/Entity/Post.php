@@ -19,7 +19,7 @@ class Post
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $id = 0;
 
     /**
      * @var \DateTime

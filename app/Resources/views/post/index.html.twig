@@ -1,41 +1,32 @@
-{% extends 'base.html.twig' %}
+{% for post in posts %}
+<div class="card">
+  <div class="card-content">
+    <div class="valign-wrapper">
+      <img src="{{ post.createdBy.logowebpath }}" alt="" class="logo-small"/>
+      <a href="{{ path('player_show', { 'login': post.createdBy.login }) }}">{{ post.createdBy.login }}</a>, 
+      {{ post.createdAt|date('d/m/Y h:i') }}
+    </div>
+    <hr/>
+    {{ post.comment }}
+  </div>
+  {% if (app.user and app.user.getId() == post.createdBy.id) or is_granted('ROLE_ADMIN') %}
+  <div class="card-action">
+    {{ form_start(delete_form, { 'action': path('post_delete', { 'id': post.id, 'game': game.shortname }) }) }}
+    <a class="btn btn-small orange" href="{{ path('post_edit', { 'id': post.id, 'game': game.shortname }) }}"><i class="material-icons">mode_edit</i></a>
+    <button type="submit" class="btn btn-small orange" value="Delete"><i class="material-icons">delete</i></button>
+    {{ form_end(delete_form) }}
+  </div>
+  {% endif %}
+</div>
+{% else %}
+  <p class="flow-text">No comment yet</p>
+{% endfor %}
 
-{% block body %}
-    <h1>{{ game.fullname }} posts</h1>
+{% if is_granted('ROLE_USER') %}
+<div class="container">
+  <a href="{{ path('post_new', { 'game': game.shortname }) }}" class="btn">
+    <i class="material-icons left">add</i> Add comment
+  </a>
+</div>
+{% endif %}
 
-    <table>
-        <thead>
-            <tr>
-                <th>Createdat</th>
-                <th>Modifiedat</th>
-                <th>Comment</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for post in posts %}
-            <tr>
-                <td>{% if post.createdAt %}{{ post.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if post.modifiedAt %}{{ post.modifiedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ post.comment }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('post_show', { 'id': post.id, 'game': game.shortname }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('post_edit', { 'id': post.id, 'game': game.shortname }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('post_new', { 'game': game.shortname }) }}">Create a new post</a>
-        </li>
-    </ul>
-{% endblock %}
