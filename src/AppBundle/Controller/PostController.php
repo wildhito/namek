@@ -28,11 +28,14 @@ class PostController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $posts = $em->getRepository('AppBundle:Post')->findBy(array('game' => $game));
-        $deleteForm = $this->createDeleteForm(new Post(), $game);
+        $deleteForms = array();
+        foreach($posts as $post) {
+          $deleteForms[$post->getId()] = $this->createDeleteForm($post, $game)->createView();
+        }
         return $this->render('post/index.html.twig', array(
             'posts' => $posts,
             'game' => $game,
-            'delete_form' => $deleteForm->createView(),
+            'delete_forms' => $deleteForms,
         ));
     }
 

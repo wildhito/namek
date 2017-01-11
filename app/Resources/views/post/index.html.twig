@@ -11,10 +11,20 @@
   </div>
   {% if (app.user and app.user.getId() == post.createdBy.id) or is_granted('ROLE_ADMIN') %}
   <div class="card-action">
-    {{ form_start(delete_form, { 'action': path('post_delete', { 'id': post.id, 'game': game.shortname }) }) }}
     <a class="btn btn-small orange" href="{{ path('post_edit', { 'id': post.id, 'game': game.shortname }) }}"><i class="material-icons">mode_edit</i></a>
-    <button type="submit" class="btn btn-small orange" value="Delete"><i class="material-icons">delete</i></button>
-    {{ form_end(delete_form) }}
+    <button data-target="modal{{ post.id}}" class="btn btn-small orange"><i class="material-icons">delete</i></button>
+  </div>
+  <div id="modal{{ post.id }}" class="modal">
+    <div class="modal-content">
+      <h4>Confirmation required</h4>
+      <p>Are you sure to remove this post?</p>
+    </div>
+    <div class="modal-footer">
+     {{ form_start(delete_forms[post.id]) }}
+       <button class="modal-action btn-flat red white-text" type="submit" value="Delete">Delete</button>
+       <a href="#!" class="modal-action modal-close btn-flat">Cancel</a>
+     {{ form_end(delete_forms[post.id]) }}
+    </div>
   </div>
   {% endif %}
 </div>
@@ -29,4 +39,10 @@
   </a>
 </div>
 {% endif %}
+
+<script>
+$(document).ready(function(){
+  $('.modal').modal();
+});
+</script>
 

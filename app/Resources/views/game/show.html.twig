@@ -21,7 +21,7 @@
     </div>
   </div>
 
-  <div class="container">
+  <div class="cmntainer">
     <div class="row">
       <ul class="tabs">
         <li class="tab col s3"><a href="#review">Review</a></li>
@@ -55,14 +55,34 @@
   {% if is_granted("ROLE_ADMIN") %}
   <div class="container">
     <div class="fixed-action-btn horizontal">
-        {{ form_start(delete_form) }}
-           <button title="Delete" class="btn-floating btn-large red" type="submit" name="action">
+           <button data-target="modal1" title="Delete" class="btn-floating btn-large red">
              <i class="material-icons">delete</i>
            </button>
            <a title="Change logo" class="btn-floating btn-large blue" href="{{ path('game_logo', {'id': game.id}) }}"><i class="material-icons">image</i></a>
            <a title="Edit" class="btn-floating btn-large blue" href="{{ path('game_edit', { 'id': game.id }) }}"><i class="material-icons">mode_edit</i></a>
-        {{ form_end(delete_form) }}
+    </div>
+  </div>
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Confirmation required</h4>
+      <p>Are you sure to remove {{ game.fullname }} ?</p>
+    </div>
+    <div class="modal-footer">
+     {{ form_start(delete_form) }}
+       <button class="modal-action btn-flat red white-text" type="submit" name="action">Delete</button>
+       <a href="#!" class="modal-action modal-close btn-flat">Cancel</a>
+     {{ form_end(delete_form) }}
     </div>
   </div>
   {% endif %}
 {% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+$(document).ready(function(){
+  $('.modal').modal();
+});
+</script>
+{% endblock %}
+
