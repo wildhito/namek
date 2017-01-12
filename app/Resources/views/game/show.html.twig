@@ -42,7 +42,7 @@
     <div id="players">
       <ul>
       {% for player in game_players %}
-         <li>
+         <li class="valign-wrapper">
            <img src="{{ player.logowebpath }}" alt="" class="logo-small circle" />
            <a href="{{ path('player_show', { 'login': player.login }) }}">{{ player.login }}</a>
          </li>

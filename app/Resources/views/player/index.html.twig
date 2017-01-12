@@ -22,7 +22,10 @@
         <tbody>
         {% for player in players %}
             <tr>
-                <td><a href="{{ path('player_show', { 'login': player.login }) }}">{{ player.login }}</a></td>
+                <td class="valign-wrapper">
+                  <img class="logo-small circle" src="{{ player.logowebpath }}" alt="" />
+                  <a href="{{ path('player_show', { 'login': player.login }) }}">{{ player.login }}</a>
+                </td>
                 {% if is_granted('ROLE_USER') %}
                 <td>{{ player.email }}</td>
                 <td>{{ player.role }}</td>
