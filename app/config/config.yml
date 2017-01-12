@@ -39,6 +39,14 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        website:
+            name: "%website_name%"
+            brief: "%website_brief%"
+            other_link: "%website_other_link%"
+            other_link_brief: "%website_other_link_brief%"
+            facebook: "%website_facebook%"
+            twitter: "%website_twitter%"
 
 # Doctrine Configuration
 doctrine:

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<div class="section">
+  <div class="container">
+    <h1 class="header center orange-text">Registration</h1>
+  </div>
+</div>
+
+<div class="section">
+  <div class="container">
+    <blockquote>
+      <p class="flow-text"><i class="material-icons">warning</i> Your account will be blocked until an administrator manually validates it.</p>
+    </blockquote>
+  </div>
+</div>
+
+<div class="section">
+  <div class="container">
+    {{ form_start(form) }}
+        {{ form_row(form.login) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.plainPassword.first) }}
+        {{ form_row(form.plainPassword.second) }}
+
+        <button class="btn btn-large" type="submit">Register!</button>
+    {{ form_end(form) }}
+  </div>
+</div>
+{% endblock %}

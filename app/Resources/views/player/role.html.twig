@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<div class="section no-pad-bot">
+  <div class="container">
+    <h1 class="header center orange-text">{{ player.login }}</h1>
+  </div>
+</div>
+
+<div class="section">
+  <div class="container">
+    {{ form_start(role_form) }}
+        {{ form_widget(role_form) }}
+        <input class="btn btn-large blue" type="submit" value="Update" />
+    {{ form_end(role_form) }}
+  </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+$(document).ready(function() {
+    $('select').material_select();
+});
+</script>
+{% endblock %}
+

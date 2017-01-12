@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+  <div class="section no-pad-bot">
+    <div class="container">
+      <br><br>
+      <h1 class="header center orange-text">{{ game.fullname }}</h1>
+      <div class="row center">
+        <img src="{{ game.logowebpath }}" alt="" class="logo-medium"/>
+        <p class="flow-text col s12 light">{{ game.brief }}</p>
+      </div>
+      {% if is_granted('ROLE_USER') %}
+         {% if game in app.user.games %}
+         {% else %}
+      <div class="row center">
+        <a href="{{ path('game_add_player', {'shortname': game.shortname}) }}" class="btn orange"><i class="material-icons left">star</i> I play to this game!</a>
+      </div>
+      <br><br>
+         {% endif %}
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="cmntainer">
+    <div class="row">
+      <ul class="tabs">
+        <li class="tab col s3"><a href="#review">Review</a></li>
+        <li class="tab col s3"><a href="#discussion">Discussion</a></li>
+        {% if app.user and (app.user.id == game.createdBy.id or is_granted("ROLE_ADMIN")) %}
+        <li class="tab col s3"><a href="#pictures">Pictures</a></li>
+        {% endif %}
+        <li class="tab col s3"><a href="#players">Players</a></li>
+    </div>
+
+    <div id="review" class="flow-text">
+      {{ game.review | markdown }}
+    </div>
+    <div id="discussion">
+    {{ render(controller('AppBundle:Post:index', { 'game': game.shortname })) }}
+    </div>
+
+    {% if app.user and (app.user.id == game.createdBy.id or is_granted("ROLE_ADMIN")) %}
+    <div id="pictures" class="container">
+      <blockquote>
+        Hint: pictures can be rendered in review with ![title](/one/of/those/urls)
+      </blockquote>
+      <div>
+        <a class="btn btn-large" href="{{ path('game_picture', {'id': game.id}) }}">Add a picture</a>
+        <ul class="collection">
+        {% for picture in pictures %}
+          <li class="collection-item valign-wrapper">
+              {{ form_start(picture_delete_forms[loop.index0]) }}
+              <a href="{{ picture }}" target="_blank">{{ picture }}</a>
+              <button class="btn btn-small" type="submit" value="Delete"><i class="material-icons">delete</i></button>
+              {{ form_end(picture_delete_forms[loop.index0]) }}
+          </li>
+        {% endfor %}
+        </ul>
+      </div>
+    </div>
+    {% endif %}
+
+    <div id="players">
+      <ul class="collection">
+      {% for player in game_players %}
+         <li class="collection-item-avatar valign-wrapper">
+           <img src="{{ player.logowebpath }}" alt="" class="logo-small circle" />
+           <a href="{{ path('player_show', { 'login': player.login }) }}">{{ player.login }}</a>
+         </li>
+      {% endfor %}
+      </ul>
+    </div>
+  </div>
+    <br/>
+    <br/>
+  {% if is_granted("ROLE_ADMIN") %}
+  <div class="container">
+    <div class="fixed-action-btn horizontal">
+           <button data-target="modal1" title="Delete" class="btn-floating btn-large red">
+             <i class="material-icons">delete</i>
+           </button>
+           <a title="Change logo" class="btn-floating btn-large blue" href="{{ path('game_logo', {'id': game.id}) }}"><i class="material-icons">image</i></a>
+           <a title="Edit" class="btn-floating btn-large blue" href="{{ path('game_edit', { 'id': game.id }) }}"><i class="material-icons">mode_edit</i></a>
+    </div>
+  </div>
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Confirmation required</h4>
+      <p>Are you sure to remove {{ game.fullname }} ?</p>
+    </div>
+    <div class="modal-footer">
+     {{ form_start(delete_form) }}
+       <button class="modal-action btn-flat red white-text" type="submit" name="action">Delete</button>
+       <a href="#!" class="modal-action modal-close btn-flat">Cancel</a>
+     {{ form_end(delete_form) }}
+    </div>
+  </div>
+  {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+$(document).ready(function(){
+  $('.modal').modal();
+});
+</script>
+{% endblock %}
+
