@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Finder\Finder;
 
 /**
  * Game controller.
@@ -76,10 +77,23 @@ class GameController extends Controller
 
         $deleteForm = $this->createDeleteForm($game);
 
+        $finder = new Finder();
+        $finder->files()->in($game->getPictureDir());
+        $pictureDeleteForms = array();
+        $pictures = array();
+        foreach ($finder as $picture) {
+          $pictures[] = sprintf("%s/%s", $game->getPictureWebDir(), $picture->getFilename());
+          $pictureDeleteForms[] = $this->createPictureDeleteForm(
+              $game,
+              sprintf("%s/%s", $game->getPictureDir(), $picture->getFilename()))
+            ->createView();
+        }
+
         return $this->render('game/show.html.twig', array(
             'game' => $game,
             'game_players' => $players,
-            'logo_path' => $game->getLogoWebPath(),
+            'pictures' => $pictures,
+            'picture_delete_forms' => $pictureDeleteForms,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -109,6 +123,50 @@ class GameController extends Controller
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
+    }
+
+   /**
+     * Displays a form to upload a game picture
+     *
+     * @Route("/{id}/picture", name="game_picture")
+     * @Method({"GET", "POST"})
+     */
+    public function pictureAction(Request $request, Game $game)
+    {
+        $pictureForm = $this->createForm('AppBundle\Form\UploadType', null,
+             array('label' => 'Game picture'));
+        $pictureForm->handleRequest($request);
+        if ($pictureForm->isSubmitted() && $pictureForm->isValid()) {
+            $data = $pictureForm->getData();
+            $file = $data['uploaded_file'];
+            $targetDir = $game->getPictureDir();
+            if ($this->get('app.file_uploader')->upload($file, $targetDir, $file->getClientOriginalName(),
+                $game->getPictureMimeTypes())) {
+                return $this->redirectToRoute('game_show', array('shortname' => $game->getShortname()));
+            }
+        }
+        return $this->render('common/upload.html.twig', array(
+            'upload_form' => $pictureForm->createView(),
+            'upload_title' => sprintf("%s's pictures", $game->getFullname()),
+        ));
+    }
+
+    /**
+     * Delete a picture
+     *
+     * @Route("/{id}/picture", name="game_picture_delete")
+     * @Method("DELETE")
+     */
+    public function pictureDeleteAction(Request $request, Game $game)
+    {
+        $fs = new \Symfony\Component\Filesystem\Filesystem();
+        $form = $this->createPictureDeleteForm($game, null);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+          $fs->remove($request->request->get("form")["picture"]);
+        }
+        return $this->redirectToRoute('game_show', array('shortname' => $game->getShortname()));
     }
 
     /**
@@ -188,5 +246,23 @@ class GameController extends Controller
             ->getForm()
         ;
     }
+
+    /**
+     * Creates a form to delete a picture from a game entity.
+     *
+     * @param Game $game The game entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createPictureDeleteForm(Game $game, $picture)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('game_picture_delete', array('id' => $game->getId())))
+            ->setMethod('DELETE')
+            ->add('picture', \Symfony\Component\Form\Extension\Core\Type\HiddenType::class, array('data' => $picture))
+            ->getForm()
+        ;
+    }
+
 }
 

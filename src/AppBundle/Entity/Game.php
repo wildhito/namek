@@ -292,9 +292,24 @@ class Game
         return "image/png";
     }
 
+    public function getPictureMimeTypes()
+    {
+        return array("image/jpeg", "image/png");
+    }
+
     public function getLogoDir()
     {
         return sprintf("games/%d", $this->id);
+    }
+
+    public function getPictureDir()
+    {
+        return sprintf("%s/pictures", $this->getLogoDir());
+    }
+
+    public function getPictureWebDir()
+    {
+        return sprintf("/%s", $this->getPictureDir());
     }
 
     public function getLogoPath()

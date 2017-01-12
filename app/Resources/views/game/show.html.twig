@@ -26,7 +26,9 @@
       <ul class="tabs">
         <li class="tab col s3"><a href="#review">Review</a></li>
         <li class="tab col s3"><a href="#discussion">Discussion</a></li>
-        <li class="tab col s3 disabled"><a href="#pictures">Pictures</a></li>
+        {% if app.user and (app.user.id == game.createdBy.id or is_granted("ROLE_ADMIN")) %}
+        <li class="tab col s3"><a href="#pictures">Pictures</a></li>
+        {% endif %}
         <li class="tab col s3"><a href="#players">Players</a></li>
     </div>
 
@@ -36,13 +38,32 @@
     <div id="discussion">
     {{ render(controller('AppBundle:Post:index', { 'game': game.shortname })) }}
     </div>
-    <div id="pictures">
-      TODO() pictures management
+
+    {% if app.user and (app.user.id == game.createdBy.id or is_granted("ROLE_ADMIN")) %}
+    <div id="pictures" class="container">
+      <blockquote>
+        Hint: pictures can be rendered in review with ![title](/one/of/those/urls)
+      </blockquote>
+      <div>
+        <a class="btn btn-large" href="{{ path('game_picture', {'id': game.id}) }}">Add a picture</a>
+        <ul class="collection">
+        {% for picture in pictures %}
+          <li class="collection-item valign-wrapper">
+              {{ form_start(picture_delete_forms[loop.index0]) }}
+              <a href="{{ picture }}" target="_blank">{{ picture }}</a>
+              <button class="btn btn-small" type="submit" value="Delete"><i class="material-icons">delete</i></button>
+              {{ form_end(picture_delete_forms[loop.index0]) }}
+          </li>
+        {% endfor %}
+        </ul>
+      </div>
     </div>
+    {% endif %}
+
     <div id="players">
-      <ul>
+      <ul class="collection">
       {% for player in game_players %}
-         <li class="valign-wrapper">
+         <li class="collection-item-avatar valign-wrapper">
            <img src="{{ player.logowebpath }}" alt="" class="logo-small circle" />
            <a href="{{ path('player_show', { 'login': player.login }) }}">{{ player.login }}</a>
          </li>
