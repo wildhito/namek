@@ -6,10 +6,20 @@
       <br><br>
       <h1 class="header center orange-text">{{ block('title') }}</h1>
       <div class="row center">
-        <h5 class="header col s12 light">A great association of awesome players</h5>
+        <h5 class="header col s12 light">{{ website.brief }}</h5>
       </div>
       <div class="row center">
-        <a href="{{ path('game_index') }}" id="download-button" class="btn-large waves-effect waves-light orange">Listen to our podcasts!</a>
+        {% if website.other_link %}
+        <a href="{{ website.other_link }}" target="_blank" id="download-button" class="btn-large waves-effect waves-light orange">{{ website.other_link_brief }}</a>
+        {% endif %}
+      </div>
+      <div class="row center">
+        {% if website.facebook %}
+        <a href="{{ website.facebook }}" target="_blank"><img src="{{ asset('images/facebook-box.png') }}" alt="F" /></a>
+        {% endif %}
+        {% if website.twitter %}
+<a href="{{ website.twitter }}" target="_blank"><img src="{{ asset('images/twitter-circle.png') }}" alt="T" /></a>
+        {% endif %}
       </div>
       <br><br>
 
