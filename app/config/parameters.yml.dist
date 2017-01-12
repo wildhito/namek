@@ -24,4 +24,7 @@ parameters:
     website_twitter: https://twitter.com/namek_example/
     website_other_link: https://hearthis.at/namek_example/
     website_other_link_brief: Listen to our podcasts!
+    recaptcha_enabled: true
+    recaptcha_public_key: paste_public_key_here
+    recaptcha_private_key: paste_private_key_here
 
