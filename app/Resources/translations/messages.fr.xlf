@@ -87,8 +87,8 @@
                 <target>Etes-vous sur de supprimer %name% ?</target>
             </trans-unit>
            <trans-unit id="22">
-                <source>?</source>
-                <target> ?</target>
+                <source>m/d/Y \a\t h:i</source>
+                <target>\l\e  d/m/Y à h:i</target>
             </trans-unit>
            <trans-unit id="23">
                 <source>Cancel</source>

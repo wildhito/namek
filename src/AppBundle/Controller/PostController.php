@@ -25,6 +25,8 @@ class PostController extends Controller
      */
     public function indexAction(Game $game)
     {
+        $this->get('twig')->getExtension('core')->setDateFormat(
+            $this->get('translator')->trans('m/d/Y \a\t h:i'));
         $em = $this->getDoctrine()->getManager();
 
         $posts = $em->getRepository('AppBundle:Post')->findBy(array('game' => $game));

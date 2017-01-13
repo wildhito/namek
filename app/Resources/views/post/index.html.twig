@@ -4,7 +4,7 @@
     <div class="valign-wrapper">
       <img src="{{ post.createdBy.logowebpath }}" alt="" class="logo-small"/>
       <a href="{{ path('player_show', { 'login': post.createdBy.login }) }}">{{ post.createdBy.login }}</a>, 
-      {{ post.createdAt|date('d/m/Y h:i') }}
+      {{ post.createdAt|date }}
     </div>
     <hr/>
     {{ post.comment }}
