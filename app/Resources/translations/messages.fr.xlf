@@ -1,0 +1,204 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>Games</source>
+                <target>Jeux</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>Players</source>
+                <target>Joueurs</target>
+            </trans-unit>
+           <trans-unit id="3">
+                <source>Log out</source>
+                <target>Déconnexion</target>
+            </trans-unit>
+           <trans-unit id="4">
+                <source>Join us</source>
+                <target>Nous rejoindre</target>
+            </trans-unit>
+           <trans-unit id="5">
+                <source>Login</source>
+                <target>Login</target>
+            </trans-unit>
+           <trans-unit id="6">
+                <source>Please login</source>
+                <target>Connexion</target>
+            </trans-unit>
+           <trans-unit id="7">
+                <source>Username</source>
+                <target>Nom d'utilisateur</target>
+            </trans-unit>
+           <trans-unit id="8">
+                <source>Password</source>
+                <target>Mot de passe</target>
+            </trans-unit>
+           <trans-unit id="9">
+                <source>Update</source>
+                <target>Mise à jour</target>
+            </trans-unit>
+           <trans-unit id="10">
+                <source>Save</source>
+                <target>Enregistrer</target>
+            </trans-unit>
+           <trans-unit id="11">
+                <source>I play to this game!</source>
+                <target>Je joue à ce jeu !</target>
+            </trans-unit>
+           <trans-unit id="12">
+                <source>Review</source>
+                <target>Revue</target>
+            </trans-unit>
+           <trans-unit id="13">
+                <source>Discussion</source>
+                <target>Discussion</target>
+            </trans-unit>
+           <trans-unit id="14">
+                <source>Pictures</source>
+                <target>Photos</target>
+            </trans-unit>
+           <trans-unit id="15">
+                <source>Tip: pictures can be rendered in review with ![title](/one/of/the/following/urls)</source>
+                <target>Astuce : pour afficher une photo dans une revue, utiliser ![titre](/une/des/urls/suivantes)</target>
+            </trans-unit>
+           <trans-unit id="16">
+                <source>Add a picture</source>
+                <target>Ajouter une photo</target>
+            </trans-unit>
+           <trans-unit id="17">
+                <source>Delete</source>
+                <target>Supprimer</target>
+            </trans-unit>
+           <trans-unit id="18">
+                <source>Change logo</source>
+                <target>Modifier le logo</target>
+            </trans-unit>
+           <trans-unit id="19">
+                <source>Edit</source>
+                <target>Modifier</target>
+            </trans-unit>
+           <trans-unit id="20">
+                <source>Confirmation required</source>
+                <target>Confirmation requise</target>
+            </trans-unit>
+           <trans-unit id="21">
+                <source>Are you sure to remove %name%?</source>
+                <target>Etes-vous sur de supprimer %name% ?</target>
+            </trans-unit>
+           <trans-unit id="22">
+                <source>m/d/Y \a\t h:i</source>
+                <target>\l\e  d/m/Y à h:i</target>
+            </trans-unit>
+           <trans-unit id="23">
+                <source>Cancel</source>
+                <target>Annuler</target>
+            </trans-unit>
+           <trans-unit id="24">
+                <source>No comment yet</source>
+                <target>Aucun commentaire</target>
+            </trans-unit>
+           <trans-unit id="25">
+                <source>Add comment</source>
+                <target>Réagir</target>
+            </trans-unit>
+           <trans-unit id="26">
+                <source>Comment</source>
+                <target>Commentaire</target>
+            </trans-unit>
+           <trans-unit id="27">
+                <source>Post</source>
+                <target>Poster</target>
+            </trans-unit>
+           <trans-unit id="28">
+                <source>Are you sure to remove this post?</source>
+                <target>Etes-vous sûr de supprimer ce commentaire ?</target>
+            </trans-unit>
+           <trans-unit id="29">
+                <source>Games I play</source>
+                <target>J'y joue</target>
+            </trans-unit>
+           <trans-unit id="30">
+                <source>Change role</source>
+                <target>Modifier le rôle</target>
+            </trans-unit>
+           <trans-unit id="31">
+                <source>Role</source>
+                <target>Rôle</target>
+            </trans-unit>
+           <trans-unit id="32">
+                <source>none</source>
+                <target>aucun</target>
+            </trans-unit>
+           <trans-unit id="33">
+                <source>user</source>
+                <target>utilisateur</target>
+            </trans-unit>
+           <trans-unit id="34">
+                <source>admin</source>
+                <target>administrateur</target>
+            </trans-unit>
+           <trans-unit id="35">
+                <source>Email</source>
+                <target>Email</target>
+            </trans-unit>
+           <trans-unit id="36">
+                <source>Repeat Password</source>
+                <target>Confirmer le mot de passe</target>
+            </trans-unit>
+           <trans-unit id="37">
+                <source>Recaptcha</source>
+                <target>Recaptcha</target>
+            </trans-unit>
+           <trans-unit id="38">
+                <source>Registration</source>
+                <target>Inscription</target>
+            </trans-unit>
+           <trans-unit id="39">
+                <source>Your account will be locked until an administrator manually validates it.</source>
+                <target>Votre compte est verrouillé jusqu'à ce qu'un administrateur le valide à la main.</target>
+            </trans-unit>
+           <trans-unit id="40">
+                <source>Register!</source>
+                <target>Enregistrer !</target>
+            </trans-unit>
+           <trans-unit id="41">
+                <source>Shortname</source>
+                <target>Nom court</target>
+            </trans-unit>
+           <trans-unit id="42">
+                <source>Fullname</source>
+                <target>Nom complet</target>
+            </trans-unit>
+           <trans-unit id="43">
+                <source>Brief</source>
+                <target>Accroche</target>
+            </trans-unit>
+           <trans-unit id="44">
+                <source>Upload</source>
+                <target>Envoyer</target>
+            </trans-unit>
+           <trans-unit id="45">
+                <source>Game picture</source>
+                <target>Photo de jeu</target>
+            </trans-unit>
+           <trans-unit id="46">
+                <source>Game logo</source>
+                <target>Logo du jeu</target>
+            </trans-unit>
+           <trans-unit id="47">
+                <source>Player logo</source>
+                <target>Avatar</target>
+            </trans-unit>
+           <trans-unit id="48">
+                <source>%name%'s logo</source>
+                <target>Logo de %name%</target>
+            </trans-unit>
+           <trans-unit id="49">
+                <source>%name%'s pictures</source>
+                <target>Photos de %name%</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
+

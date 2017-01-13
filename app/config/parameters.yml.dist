@@ -17,3 +17,14 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    website_name: Namek
+    website_brief: A great association of awesome players
+    website_facebook: https://facebook.com/namek_example/
+    website_twitter: https://twitter.com/namek_example/
+    website_other_link: https://hearthis.at/namek_example/
+    website_other_link_brief: Listen to our podcasts!
+    recaptcha_enabled: true
+    recaptcha_public_key: paste_public_key_here
+    recaptcha_private_key: paste_private_key_here
+

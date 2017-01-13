@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<div class="section no-pad-bot">
+  <div class="container">
+    <br/><br/>
+    <h1 class="header center orange-text">{{ upload_title }}</h1>
+
+    {{ form_start(upload_form) }}
+        {{ form_widget(upload_form) }}
+        <br/><br/>
+        <input type="submit" class="btn-large" value="{{ 'Upload'|trans }}" />
+    {{ form_end(upload_form) }}
+  </div>
+</div>
+{% endblock %}

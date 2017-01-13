@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<div class="section no-pad-bot">
+  <div class="container">
+    <h1 class="header center orange-text">New game+</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input class="btn btn-large" type="submit" value="{{ 'Save'|trans }}" />
+    {{ form_end(form) }}
+  </div>
+</div>
+{% endblock %}

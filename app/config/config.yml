@@ -10,7 +10,10 @@ parameters:
 
 framework:
     #esi:             ~
-    #translator:      { fallbacks: ["%locale%"] }
+    translator:
+        fallback: "%locale%"
+        paths:
+            - '%kernel.root_dir%/Resources/translations'
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -39,6 +42,14 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        website:
+            name: "%website_name%"
+            brief: "%website_brief%"
+            other_link: "%website_other_link%"
+            other_link_brief: "%website_other_link_brief%"
+            facebook: "%website_facebook%"
+            twitter: "%website_twitter%"
 
 # Doctrine Configuration
 doctrine:
@@ -69,3 +80,11 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+ewz_recaptcha:
+    public_key:  "%recaptcha_public_key%"
+    private_key: "%recaptcha_private_key%"
+    # Not needed as "%kernel.default_locale%" is the default value for the locale key
+    locale_key:  %kernel.default_locale%
+    enabled: %recaptcha_enabled%
+
