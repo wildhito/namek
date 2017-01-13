@@ -16,26 +16,26 @@
   </div>
   <div id="modal{{ post.id }}" class="modal">
     <div class="modal-content">
-      <h4>Confirmation required</h4>
-      <p>Are you sure to remove this post?</p>
+      <h4>{{ 'Confirmation required'|trans }}</h4>
+      <p>{{ 'Are you sure to remove this post?'|trans }}</p>
     </div>
     <div class="modal-footer">
      {{ form_start(delete_forms[post.id]) }}
-       <button class="modal-action btn-flat red white-text" type="submit" value="Delete">Delete</button>
-       <a href="#!" class="modal-action modal-close btn-flat">Cancel</a>
+       <button class="modal-action btn-flat red white-text" type="submit" value="Delete">{{ 'Delete'|trans }}</button>
+       <a href="#!" class="modal-action modal-close btn-flat">{{ 'Cancel'|trans }}</a>
      {{ form_end(delete_forms[post.id]) }}
     </div>
   </div>
   {% endif %}
 </div>
 {% else %}
-  <p class="flow-text">No comment yet</p>
+  <p class="flow-text">{{ 'No comment yet'|trans }}</p>
 {% endfor %}
 
 {% if is_granted('ROLE_USER') %}
 <div class="container">
   <a href="{{ path('post_new', { 'game': game.shortname }) }}" class="btn">
-    <i class="material-icons left">add</i> Add comment
+    <i class="material-icons left">add</i> {{'Add comment'|trans }}
   </a>
 </div>
 {% endif %}

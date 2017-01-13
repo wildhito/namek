@@ -13,7 +13,7 @@
          {% if game in app.user.games %}
          {% else %}
       <div class="row center">
-        <a href="{{ path('game_add_player', {'shortname': game.shortname}) }}" class="btn orange"><i class="material-icons left">star</i> I play to this game!</a>
+        <a href="{{ path('game_add_player', {'shortname': game.shortname}) }}" class="btn orange"><i class="material-icons left">star</i> {{'I play to this game!'|trans }}</a>
       </div>
       <br><br>
          {% endif %}
@@ -21,15 +21,15 @@
     </div>
   </div>
 
-  <div class="cmntainer">
+  <div class="container">
     <div class="row">
       <ul class="tabs">
-        <li class="tab col s3"><a href="#review">Review</a></li>
-        <li class="tab col s3"><a href="#discussion">Discussion</a></li>
+        <li class="tab col s3"><a href="#review">{{ 'Review'|trans }}</a></li>
+        <li class="tab col s3"><a href="#discussion">{{ 'Discussion'|trans }}</a></li>
         {% if app.user and (app.user.id == game.createdBy.id or is_granted("ROLE_ADMIN")) %}
-        <li class="tab col s3"><a href="#pictures">Pictures</a></li>
+        <li class="tab col s3"><a href="#pictures">{{ 'Pictures'|trans }}</a></li>
         {% endif %}
-        <li class="tab col s3"><a href="#players">Players</a></li>
+        <li class="tab col s3"><a href="#players">{{ 'Players'|trans }}</a></li>
     </div>
 
     <div id="review" class="flow-text">
@@ -42,10 +42,10 @@
     {% if app.user and (app.user.id == game.createdBy.id or is_granted("ROLE_ADMIN")) %}
     <div id="pictures" class="container">
       <blockquote>
-        Hint: pictures can be rendered in review with ![title](/one/of/those/urls)
+        {{'Tip: pictures can be rendered in review with ![title](/one/of/the/following/urls)'|trans }}
       </blockquote>
       <div>
-        <a class="btn btn-large" href="{{ path('game_picture', {'id': game.id}) }}">Add a picture</a>
+        <a class="btn btn-large" href="{{ path('game_picture', {'id': game.id}) }}">{{ 'Add a picture'|trans }}</a>
         <ul class="collection">
         {% for picture in pictures %}
           <li class="collection-item valign-wrapper">
@@ -76,22 +76,22 @@
   {% if is_granted("ROLE_ADMIN") %}
   <div class="container">
     <div class="fixed-action-btn horizontal">
-           <button data-target="modal1" title="Delete" class="btn-floating btn-large red">
+           <button data-target="modal1" title="{{ 'Delete'|trans }}" class="btn-floating btn-large red">
              <i class="material-icons">delete</i>
            </button>
-           <a title="Change logo" class="btn-floating btn-large blue" href="{{ path('game_logo', {'id': game.id}) }}"><i class="material-icons">image</i></a>
-           <a title="Edit" class="btn-floating btn-large blue" href="{{ path('game_edit', { 'id': game.id }) }}"><i class="material-icons">mode_edit</i></a>
+           <a title="{{ 'Change logo'|trans }}" class="btn-floating btn-large blue" href="{{ path('game_logo', {'id': game.id}) }}"><i class="material-icons">image</i></a>
+           <a title="{{ 'Edit'|trans }}" class="btn-floating btn-large blue" href="{{ path('game_edit', { 'id': game.id }) }}"><i class="material-icons">mode_edit</i></a>
     </div>
   </div>
   <div id="modal1" class="modal">
     <div class="modal-content">
-      <h4>Confirmation required</h4>
-      <p>Are you sure to remove {{ game.fullname }} ?</p>
+      <h4>{{ 'Confirmation required'|trans }}</h4>
+      <p>{% trans with {'%name%': game.fullname} from "messages" %}Are you sure to remove %name%?{% endtrans %}</p>
     </div>
     <div class="modal-footer">
      {{ form_start(delete_form) }}
-       <button class="modal-action btn-flat red white-text" type="submit" name="action">Delete</button>
-       <a href="#!" class="modal-action modal-close btn-flat">Cancel</a>
+       <button class="modal-action btn-flat red white-text" type="submit" name="action">{{ 'Delete'|trans }}</button>
+       <a href="#!" class="modal-action modal-close btn-flat">{{ 'Cancel'|trans }}</a>
      {{ form_end(delete_form) }}
     </div>
   </div>

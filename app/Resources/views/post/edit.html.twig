@@ -3,11 +3,11 @@
 {% block content %}
 <div class="section">
   <div class="container">
-    <h1 class="header center orange-text">Comment on {{ game.fullname }}</h1>
+    <h1 class="header center orange-text">{{ game.fullname }}</h1>
 
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
-        <button class="btn btn-large" type="submit">Post</button>
+        <button class="btn btn-large" type="submit">{{ 'Post'|trans }}</button>
     {{ form_end(edit_form) }}
 
   </div>
