@@ -72,23 +72,6 @@ class PostController extends Controller
     }
 
     /**
-     * Finds and displays a post entity.
-     *
-     * @Route("/{id}", name="post_show")
-     * @Method("GET")
-     */
-    public function showAction(Post $post, Game $game)
-    {
-        $deleteForm = $this->createDeleteForm($post, $game);
-
-        return $this->render('post/show.html.twig', array(
-            'post' => $post,
-            'game' => $game,
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
      * Displays a form to edit an existing post entity.
      *
      * @Route("/{id}/edit", name="post_edit")

@@ -15,7 +15,7 @@
     {% if is_granted('ROLE_ADMIN') %}
       {% if player.roles|length > 0 %}({{ player.roles[0] }}){% endif %}
     {% endif %}
-    <h5>Games I play</h5>
+    <h5>{{ 'Games I play'|trans }}</h5>
     <ul>
       {% for game in player.games %}
       <li>
@@ -29,23 +29,23 @@
 {% if app.user and (app.user.id == player.id or is_granted('ROLE_ADMIN')) %}
 <div class="container">
   <div class="fixed-action-btn horizontal">
-    <button title="Delete" data-target="modal1" class="btn-floating btn-large red">
+    <button title="{{ 'Delete'|trans }}" data-target="modal1" class="btn-floating btn-large red">
        <i class="material-icons">delete</i>
     </button>
-    <a title="Change logo" class="btn-floating btn-large blue" href="{{ path('player_logo', {'id': player.id}) }}"><i class="material-icons">image</i></a>
-    <a title="Edit" class="btn-floating btn-large blue" href="{{ path('player_edit', { 'id': player.id }) }}"><i class="material-icons">mode_edit</i></a>
-    <a title="Change role" class="btn-floating btn-large blue" href="{{ path('player_role', {'id': player.id}) }}"><i class="material-icons">assignment_ind</i></a>
+    <a title="{{ 'Change logo'|trans }}" class="btn-floating btn-large blue" href="{{ path('player_logo', {'id': player.id}) }}"><i class="material-icons">image</i></a>
+    <a title="{{ 'Edit'|trans }}" class="btn-floating btn-large blue" href="{{ path('player_edit', { 'id': player.id }) }}"><i class="material-icons">mode_edit</i></a>
+    <a title="{{ 'Change role'|trans }}" class="btn-floating btn-large blue" href="{{ path('player_role', {'id': player.id}) }}"><i class="material-icons">assignment_ind</i></a>
   </div>
 </div>
 <div id="modal1" class="modal">
   <div class="modal-content">
-    <h4>Confirmation required</h4>
-    <p>Are you sure to remove {{ player.login }} ?</p>
+    <h4>{{ 'Confirmation required'|trans }}</h4>
+    <p>{% trans with {'%name%': player.login} from "messages" %}Are you sure to remove %name%?{% endtrans %}</p>
   </div>
   <div class="modal-footer">
    {{ form_start(delete_form) }}
-     <button class="modal-action btn-flat red white-text" type="submit" name="action">Delete</button>
-     <a href="#!" class="modal-action modal-close btn-flat">Cancel</a>
+     <button class="modal-action btn-flat red white-text" type="submit" name="action">{{ 'Delete'|trans }}</button>
+     <a href="#!" class="modal-action modal-close btn-flat">{{ 'Cancel'|trans }}</a>
    {{ form_end(delete_form) }}
   </div>
 </div>

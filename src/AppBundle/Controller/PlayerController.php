@@ -104,7 +104,7 @@ class PlayerController extends Controller
     public function logoAction(Request $request, Player $player)
     {
         $logoForm = $this->createForm('AppBundle\Form\UploadType', null,
-             array('label' => 'Player logo'));
+             array('label' => $this->get('translator')->trans('Player logo')));
         $logoForm->handleRequest($request);
         if ($logoForm->isSubmitted() && $logoForm->isValid()) {
             $data = $logoForm->getData();
@@ -118,7 +118,8 @@ class PlayerController extends Controller
 
         return $this->render('common/upload.html.twig', array(
             'upload_form' => $logoForm->createView(),
-            'upload_title' => sprintf("%s's logo", $player->getLogin()),
+            'upload_title' => $this->get('translator')->trans("%name%'s logo",
+                                                             array('%name%' => $player->getLogin())),
         ));
     }
 

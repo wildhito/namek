@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Game controller.
@@ -78,17 +79,19 @@ class GameController extends Controller
         $deleteForm = $this->createDeleteForm($game);
 
         $finder = new Finder();
-        $finder->files()->in($game->getPictureDir());
+        $fs = new Filesystem();
         $pictureDeleteForms = array();
         $pictures = array();
-        foreach ($finder as $picture) {
-          $pictures[] = sprintf("%s/%s", $game->getPictureWebDir(), $picture->getFilename());
-          $pictureDeleteForms[] = $this->createPictureDeleteForm(
-              $game,
-              sprintf("%s/%s", $game->getPictureDir(), $picture->getFilename()))
-            ->createView();
+        if ($fs->exists($game->getPictureDir())) {
+            $finder->files()->in($game->getPictureDir());
+            foreach ($finder as $picture) {
+                $pictures[] = sprintf("%s/%s", $game->getPictureWebDir(), $picture->getFilename());
+                $pictureDeleteForms[] = $this->createPictureDeleteForm(
+                    $game,
+                    sprintf("%s/%s", $game->getPictureDir(), $picture->getFilename()))
+                  ->createView();
+            }
         }
-
         return $this->render('game/show.html.twig', array(
             'game' => $game,
             'game_players' => $players,
@@ -134,7 +137,7 @@ class GameController extends Controller
     public function pictureAction(Request $request, Game $game)
     {
         $pictureForm = $this->createForm('AppBundle\Form\UploadType', null,
-             array('label' => 'Game picture'));
+             array('label' => $this->get('translator')->trans('Game picture')));
         $pictureForm->handleRequest($request);
         if ($pictureForm->isSubmitted() && $pictureForm->isValid()) {
             $data = $pictureForm->getData();
@@ -147,7 +150,8 @@ class GameController extends Controller
         }
         return $this->render('common/upload.html.twig', array(
             'upload_form' => $pictureForm->createView(),
-            'upload_title' => sprintf("%s's pictures", $game->getFullname()),
+            'upload_title' => $this->get('translator')->trans("%name%'s pictures",
+                                                              array("%name%" => $game->getFullname())),
         ));
     }
 
@@ -159,7 +163,7 @@ class GameController extends Controller
      */
     public function pictureDeleteAction(Request $request, Game $game)
     {
-        $fs = new \Symfony\Component\Filesystem\Filesystem();
+        $fs = new Filesystem();
         $form = $this->createPictureDeleteForm($game, null);
         $form->handleRequest($request);
 
@@ -178,7 +182,7 @@ class GameController extends Controller
     public function logoAction(Request $request, Game $game)
     {
         $logoForm = $this->createForm('AppBundle\Form\UploadType', null,
-             array('label' => 'Game logo'));
+             array('label' => $this->get('translator')->trans('Game logo')));
         $logoForm->handleRequest($request);
         if ($logoForm->isSubmitted() && $logoForm->isValid()) {
             $data = $logoForm->getData();
@@ -192,7 +196,8 @@ class GameController extends Controller
 
         return $this->render('common/upload.html.twig', array(
             'upload_form' => $logoForm->createView(),
-            'upload_title' => sprintf("%s's logo", $game->getFullname()),
+            'upload_title' => $this->get('translator')->trans("%name%'s logo",
+                                                              array("%name%" => $game->getFullname())),
         ));
     }
 

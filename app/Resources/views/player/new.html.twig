@@ -3,14 +3,14 @@
 {% block content %}
 <div class="section">
   <div class="container">
-    <h1 class="header center orange-text">Registration</h1>
+    <h1 class="header center orange-text">{{ 'Registration'|trans }}</h1>
   </div>
 </div>
 
 <div class="section">
   <div class="container">
     <blockquote>
-      <p class="flow-text valign-wrapper"><i class="material-icons">warning</i> Your account will be locked until an administrator manually validates it.</p>
+      <p class="flow-text valign-wrapper"><i class="material-icons">warning</i> {{ 'Your account will be locked until an administrator manually validates it.'|trans }}</p>
     </blockquote>
   </div>
 </div>
@@ -24,7 +24,7 @@
         {{ form_row(form.plainPassword.second) }}
         {{ form_row(form.recaptcha) }}
 
-        <button class="btn btn-large right" type="submit">Register!</button>
+        <button class="btn btn-large right" type="submit">{{ 'Register!'|trans }}</button>
     {{ form_end(form) }}
   </div>
 </div>
